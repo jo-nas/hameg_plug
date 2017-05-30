@@ -7,7 +7,7 @@ __version__ = '0.1.0'
 
 class HM8143(visa_plug.VisaPlug):
     def __init__(self):
-        super(HM8143, self).__init__("HM8143")
+        super(self).__init__("HM8143")
         self._mixed_mode = None
         self._remote_mode = None
         self._output = None
@@ -21,7 +21,7 @@ class HM8143(visa_plug.VisaPlug):
         self.remote_mode = False
         self.output = False
 
-        super(HM8143, self).tearDown()
+        super(self).tearDown()
 
     @property
     def output(self):
