@@ -1,9 +1,8 @@
 import visa_plug
-import setup
 
 __author__ = 'Jonas Steinkamp'
 __email__ = 'jonas@steinka.mp'
-__version__ = setup.__version__
+__version__ = '0.1.0'
 
 
 class HM8143(visa_plug.VisaPlug):
