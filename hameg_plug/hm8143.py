@@ -7,7 +7,7 @@ __version__ = '0.1.0'
 
 class HM8143(visa_plug.VisaPlug):
     def __init__(self):
-        super(self).__init__("HM8143")
+        super(self.__class__, self).__init__("HM8143", timeout=500)
         self._mixed_mode = None
         self._remote_mode = None
         self._output = None
@@ -112,4 +112,3 @@ class HM8143(visa_plug.VisaPlug):
     @property
     def current_2_measured(self):
         return float(self.connection.query("MI2").replace("I2:", "").replace("A", ""))
-
