@@ -24,7 +24,7 @@ class HM8143(visa_plug.VisaPlug):
         self.remote_mode = False
         self.output = False
 
-        super(self).tearDown()
+        super(self.__class__,self).tearDown()
 
     @property
     def output(self):
