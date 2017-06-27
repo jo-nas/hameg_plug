@@ -10,6 +10,7 @@ class HM8143(visa_plug.VisaPlug):
     @conf.save_and_restore(ident_code='HM8143')
     @conf.save_and_restore(timeout=500)
     def __init__(self):
+        self.termination = '\r'
         super(self.__class__, self).__init__()
         self._mixed_mode = None
         self._remote_mode = None
