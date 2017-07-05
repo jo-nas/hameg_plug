@@ -13,7 +13,7 @@ install:
   - python setup.py install
 
 script:
- - coverage run --source progressbar_plug -m py.test
+ - coverage run --source hameg_plug -m py.test
 
 after_success:
   - coveralls
