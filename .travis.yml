@@ -7,7 +7,13 @@ language:
 python:
   - 2.7
 
-script:
+install:
+  - pip install git+https://github.com/jo-nas/visa_plug.git
   - pip install -r dev-requirements.txt
   - python setup.py install
-  - pytest
+
+script:
+ - coverage run --source progressbar_plug -m py.test
+
+after_success:
+  - coveralls
