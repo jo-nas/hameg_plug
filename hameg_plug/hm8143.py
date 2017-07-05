@@ -6,6 +6,20 @@ __email__ = 'jonas@steinka.mp'
 __version__ = '0.1.0'
 
 
+def parse_current(data_string):
+    current_string = data_string.replace("I1:", "")\
+        .replace("I2:", "")\
+        .replace("A", "")
+    return float(current_string)
+
+
+def parse_voltage(data_string):
+    voltage_string = data_string.replace("U1:", "")\
+        .replace("U2:", "")\
+        .replace("V", "")
+    return float(voltage_string)
+
+
 class HM8143(visa_plug.VisaPlug):
     @conf.save_and_restore(ident_code='HM8143')
     @conf.save_and_restore(timeout=500)
@@ -35,10 +49,10 @@ class HM8143(visa_plug.VisaPlug):
     def output(self, on_off):
         if on_off:
             self._output = True
-            self.connection.write("OP1")
+            self.write("OP1")
         else:
             self._output = False
-            self.connection.write("OP0")
+            self.write("OP0")
 
     @property
     def remote_mode(self):
@@ -49,10 +63,11 @@ class HM8143(visa_plug.VisaPlug):
         if on_off:
             self._remote_mode = True
             self._mixed_mode = False
-            self.connection.write("RM1")
+            self.write("RM1")
         else:
             self._remote_mode = False
-            self.connection.write("RM0")
+            self._mixed_mode = True
+            self.write("RM0")
 
     @property
     def mixed_mode(self):
@@ -63,56 +78,56 @@ class HM8143(visa_plug.VisaPlug):
         if on_off:
             self._mixed_mode = True
             self._remote_mode = False
-            self.connection.write("MX1")
+            self.write("MX1")
         else:
             self._mixed_mode = False
             self._remote_mode = True
-            self.connection.write("MX0")
+            self.write("MX0")
 
     @property
     def voltage_1(self):
-        return float(self.connection.query("RU1").replace("U1:", "").replace("V", ""))
+        return parse_voltage(self.query("RU1"))
 
     @voltage_1.setter
     def voltage_1(self, value):
-        self.connection.write("SU1:{:2.2f}".format(value))
+        self.write("SU1:{:2.2f}".format(value))
 
     @property
     def voltage_2(self):
-        return float(self.connection.query("RU2").replace("U2:", "").replace("V", ""))
+        return parse_voltage(self.query("RU2"))
 
     @voltage_2.setter
     def voltage_2(self, value):
-        self.connection.write("SU2:{:2.2f}".format(value))
+        self.write("SU2:{:2.2f}".format(value))
 
     @property
     def voltage_1_measured(self):
-        return float(self.connection.query("MU1").replace("U1:", "").replace("V", ""))
+        return parse_voltage(self.query("MU1"))
 
     @property
     def voltage_2_measured(self):
-        return float(self.connection.query("MU2").replace("U2:", "").replace("V", ""))
+        return parse_voltage(self.query("MU2"))
 
     @property
     def current_1(self):
-        return float(self.connection.query("RI1").replace("I1:", "").replace("A", ""))
+        return parse_current(self.query("RI1"))
 
     @current_1.setter
     def current_1(self, value):
-        self.connection.write("SI1:{:1.3f}".format(value))
+        self.write("SI1:{:1.3f}".format(value))
 
     @property
     def current_2(self):
-        return float(self.connection.query("RI2").replace("I2:", "").replace("A", ""))
+        return parse_current(self.query("RI2"))
 
     @current_2.setter
     def current_2(self, value):
-        self.connection.write("SI2:{:1.3f}".format(value))
+        self.write("SI2:{:1.3f}".format(value))
 
     @property
     def current_1_measured(self):
-        return float(self.connection.query("MI1").replace("I1:", "").replace("A", ""))
+        return parse_current(self.query("MI1"))
 
     @property
     def current_2_measured(self):
-        return float(self.connection.query("MI2").replace("I2:", "").replace("A", ""))
+        return parse_current(self.query("MI2"))
