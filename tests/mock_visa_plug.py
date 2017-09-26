@@ -11,12 +11,12 @@ __version__ = '0.1.0'
 
 
 conf.declare(
-    'ident_code',
+    'visa_ident_code',
     description='identification code of the device. port or serial_number or device_name o vendor'
 )
 
 conf.declare(
-    'timeout',
+    'visa_timeout',
     default_value=60000,
     description='timeout for the device.'
 )
@@ -33,8 +33,8 @@ class MockConnection(object):
 
 class VisaPlug(plugs.BasePlug):
     @conf.inject_positional_args
-    def __init__(self, ident_code, timeout):
-        device = self.find_device(ident_code, timeout)[0]
+    def __init__(self, visa_ident_code, visa_timeout):
+        device = self.find_device(visa_ident_code, visa_timeout)[0]
         self.connection = MockConnection()
 
         self.vendor = device["vendor"]
