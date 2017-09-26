@@ -21,8 +21,8 @@ def parse_voltage(data_string):
 
 
 class HM8143(visa_plug.VisaPlug):
-    @conf.save_and_restore(ident_code='HM8143')
-    @conf.save_and_restore(timeout=500)
+    @conf.save_and_restore(visa_ident_code='HM8143')
+    @conf.save_and_restore(visa_timeout=500)
     def __init__(self):
         super(self.__class__, self).__init__()
         self.connection.read_termination = '\r'
@@ -30,7 +30,7 @@ class HM8143(visa_plug.VisaPlug):
         self._remote_mode = None
         self._output = None
 
-        # enable mixed mode and Output off
+        # enable mixed mode and turn Output off
         self.mixed_mode = True
         self.output = False
 

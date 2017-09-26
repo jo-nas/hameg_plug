@@ -12,7 +12,7 @@ setuptools.setup(
     author="Jonas Steinkamp",
     author_email="jonas@steinka.mp",
 
-    description="A package with some hameg plug for the openhtf framework.",
+    description="A package with a hameg plug for the openhtf framework.",
     long_description=open('README.md').read(),
 
     classifiers=[
