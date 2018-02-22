@@ -20,11 +20,23 @@ def parse_voltage(data_string):
     return float(voltage_string)
 
 
+conf.declare("hm8143_ident_code", default_value='HM8143')
+conf.declare("hm8143_timeout", default_value=500)
+
+
 class HM8143(visa_plug.VisaPlug):
-    @conf.save_and_restore(visa_ident_code='HM8143')
-    @conf.save_and_restore(visa_timeout=500)
+    @conf.save_and_restore
     def __init__(self):
-        super(self.__class__, self).__init__()
+        try:
+            conf.load(
+                visa_ident_code=conf.hm8143_ident_code,
+                visa_timeout=conf.hm8143_timeout
+            )
+            super(self.__class__, self).__init__()
+        except:
+            self.logger.error("Das Hameg HM8143 konnte nicht gefunden werden.")
+            raise
+
         self.connection.read_termination = '\r'
         self._mixed_mode = None
         self._remote_mode = None
