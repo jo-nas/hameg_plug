@@ -8,6 +8,7 @@ python:
   - 2.7
 
 install:
+  - apt-get install protobuf-compiler libprotobuf-dev
   - pip install git+https://github.com/jo-nas/visa_plug.git
   - pip install -r dev-requirements.txt
   - python setup.py install
