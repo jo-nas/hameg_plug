@@ -7,8 +7,11 @@ language:
 python:
   - 2.7
 
+before_install:
+  - sudo apt-get install -y protobuf-compiler
+  - sudo apt-get install -y libprotobuf-dev
+  
 install:
-  - apt-get install protobuf-compiler libprotobuf-dev
   - pip install git+https://github.com/jo-nas/visa_plug.git
   - pip install -r dev-requirements.txt
   - python setup.py install
